@@ -175,7 +175,7 @@ namespace ECommerce.Controllers
             else
             {
                 products = db.Products
-                             .Where(x => x.Name.Contains(xname))
+                 .Where(x => x.Name.Contains(xname))
                              .ToList();
             }
 
