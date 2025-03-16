@@ -1,0 +1,39 @@
+﻿@model List<Category>
+<section id="services" class="services section">
+
+    <!-- Section Title -->
+    <div class="container section-title aos-init aos-animate" data-aos="fade-up">
+        <h2>أقسام الموقع</h2>
+        <p>لمتعة تسوق أكبر  من منزلك  </p>
+    </div><!-- End Section Title -->
+
+    <div class="container">
+
+        <div class="row gy-4">
+
+
+            @foreach (var item in Model)
+            {
+                <div class="col-xl-4 col-lg-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-item d-flex">
+                        <div class="icon flex-shrink-0"><i class="bi bi-bag-heart"></i></div>
+                        <div>
+                            <h4 class="title"><a href="/Home/Products/@item.Id" class="stretched-link">@item.Name</a></h4>
+                            <p class="description">@item.Description</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- End Service Item -->
+            }
+
+        </div>
+
+    </div>
+  @* <center class="mt-4"> *@
+  @*       @if (ViewBag.isAdmin){ *@
+  @*   <a href="/Categories" class="btn btn-primary w-100" style="font-size:larger;" >التحكم بالاقسام </a> *@
+  @*       } *@
+  @*   </center> *@
+
+</section>

@@ -1,0 +1,57 @@
+﻿@model List<ECommerce.Models.Order>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلباتك</title>
+    <link rel="stylesheet" href="~/assets/css/carts.css">
+</head>
+<body>
+    <header>
+        <h1>طلباتك</h1>
+    </header>
+
+    <div class="container" dir="rtl" lang="ar">
+        @foreach (var item in Model)
+        {
+            <div class="order-card">
+                <div class="order-header">
+                    <h4>رقم الطلب: @item.Id</h4>
+                    <p>العنوان: @item.Aderss</p>
+                </div>
+                <div class="order-details">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>اسم المنتج</th>
+                                <th>الكمية</th>
+                                <th>السعر</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var detail in item.OrderDetails)
+                            {
+                                <tr>
+                                    <td>@detail.Product.Name</td>
+                                    <td>@detail.Qty</td>
+                                    <td>@(detail.Product.Price*detail.Qty)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <br />
+                    <!-- عرض السعر الإجمالي للطلب -->
+                    <div class="order-total btn btn-success" >
+                        <p>
+                            <strong>السعر الإجمالي للطلب:</strong>
+                            @item.OrderDetails.Sum(x=>x.Product.Price*x.Qty) دولار
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</body>
+</html>

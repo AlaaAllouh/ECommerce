@@ -1,0 +1,18 @@
+﻿
+@model Product
+
+<div class="col-lg-4 col-md-6 portfolio-item isotope-item _@Model.Cat.Id " style="position: absolute; left: 0px; top: 0px;">
+    <div class="portfolio-content h-100">
+        <a href="@Model.Photo" data-gallery="portfolio-gallery-app" class="glightbox"><img src="https://localhost:62599/upload/@Model.Photo" class="img-fluid" alt=""></a>
+        <div class="portfolio-info">
+            <h4><a href="/Home/productDetails/@Model.Id" title="More Details">@Model.Name</a></h4>
+            <p>@Model.Price</p>
+        </div> 
+    </div>
+    @* <br /> *@
+    @* <div style="text-align:center; background-color:aliceblue" > *@
+    @*     <a asp-controller="Products" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a> | *@
+    @*     <a asp-controller="Products" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-dark">Details</a> | *@
+    @*     <a asp-controller="Products" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a> *@
+    @* </div> *@
+</div>

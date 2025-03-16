@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ECommerce.Models.Cart>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="~/assets/css/cartstyle.css">
+</head>
+<body>
+    <div class="cart-container" dir="rtl">
+        <h1>سلتك </h1>
+
+        <!-- Cart Item -->
+        @foreach (var item in Model)
+        {
+            <div class="cart-item">
+                <a href="/Home/productDetails/@item.ProductId">
+                <div class="item-image">
+                    <img src="https://localhost:62599/upload/@item.Product.Photo" alt="Product Image">
+                    </div>
+                </a>
+                <div class="item-details m-3">
+                    <h2>@item.Product.Name</h2>
+                    <p>@item.Product.Description</p>
+                    <div class="item-actions">
+                        <div class="item-price">
+                          <span>
+                                <p> الكمية : @item.Qty</p>
+                                <p> السعر : @(item.Product.Price * item.Qty) $</p>
+                            </span>
+                        </div>
+                        <div class="quantity-selector">
+                            <a href="/Home/RemoveProductFromCart/@item.ProductId">
+                           <button class="btn btn-danger" value="submit">Remove</button>
+                           </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        <!-- End of Cart Item -->
+        <form asp-action="addOrder" method="post" asp-controller="Home">
+            <div class="form-row">
+                <div class="form-group  d-flex" >
+                    <input type="text" class="form-control" id="Name" name="Name" placeholder="الاسم" >
+                    <input type="email" class="form-control" id="Email" name="Email" placeholder="الايميل" required>
+                </div>
+               <br />
+            
+            <div class="form-group">
+
+                    <input type="text" class="form-control" id="Aderss" name="Aderss" placeholder="العنوان" required>
+            </div>
+           <br />
+                <div class="form-group">
+
+                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="رقم الهاتف" required>
+                </div>
+            </div>
+           
+                <div class="cart-summary">
+                <h3>الاجمالي : $ @ViewBag.Total</h3>
+                <input class="checkout-btn" type="submit" value="اكمال الطلب" href="/Home/addOrder"></input>
+                </div>
+          
+          
+        </form>
+
+       
+
+       
+    </div>
+</body>
+</html>

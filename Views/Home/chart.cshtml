@@ -1,0 +1,63 @@
+﻿<canvas id="Chart"></canvas>
+
+<!-- تحميل مكتبة Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    canvas {
+        width: 80%;
+        height: 400px;
+        margin: auto;
+        display: block;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        // استدعاء API لجلب قائمة المنتجات
+        $.ajax({
+            url: 'https://localhost:7094/Home/GetAllProduct',
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                console.log(response);
+
+                // استخراج الأسماء والأسعار من البيانات
+                let labels = response.map(x => x.name);
+                let values = response.map(x => x.price);
+
+                // التأكد من أن العنصر موجود قبل محاولة استخدامه
+                const c = document.getElementById('Chart');
+                if (c) {
+                    new Chart(c, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                backgroundColor: 'rgba(54, 162, 235, 0.5)', // لون شفاف للخلفية
+                                borderColor: 'rgba(54, 162, 235, 1)', // لون الحدود
+                                label: 'Your Products Chart',
+                                data: values,
+                                borderWidth: 2,
+                                fill: true // لجعل الخلفية ممتلئة تحت الخط
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    console.error("Canvas element with ID 'Chart' not found.");
+                }
+            },
+            error: function (request, message, error) {
+                console.error("Error fetching products:", message, error);
+            }
+        });
+    });
+</script>

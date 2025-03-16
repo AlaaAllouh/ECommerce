@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>مواصفات المنتج المختار من قسم</title>
+</head>
+<body>
+
+    <div class="product-container" dir="rtl">
+
+        <!-- IMAGE GALLERY -->
+        <div class="image-gallery" dir="rtl">
+            <div class="main-image">
+                <img src="https://localhost:62599/upload/@Model.Photo" alt="Main Product" />
+            </div>
+            <div class="thumbnail-gallery">
+                @foreach (var item in Model.ProductImages)
+                {
+                    <img src="https://localhost:62599/upload/@item.Images" alt="Thumbnail" />
+                }
+            </div>
+        </div>
+
+        <!-- PRODUCT DETAILS -->
+        <div class="product-details" dir="rtl">
+            <h1>@Model.Name</h1>
+            <h4>من قسم: @Model.Cat.Name</h4>
+            <h5>تاريخ إضافة المنتج: @Model.EntryDate</h5>
+            <div class="price-section">
+                <span class="sale-price">@Model.Price</span>
+            </div>
+            <div class="reviews">
+                <span class="stars">⭐⭐⭐⭐⭐</span>
+                <span class="review-count">(128 reviews)</span>
+            </div>
+            <p class="description">
+                @Model.Description
+            </p>
+            <div class="cta-buttons">
+                <a href="/Home/AddToCart/@Model.Id">
+                    <button class="add-to-cart">أضف الى السلة</button>
+                </a>
+            </div>
+        </div>
+        @* Recommended product *@
+       
+        <div class="recommended-products" dir="rtl" >
+          
+            <h3 class="section-title">منتجات ذات صلة</h3>
+               
+            <div class="products-container">
+                @if (ViewBag.RecommendedProducts != null && ViewBag.RecommendedProducts.Count > 0)
+                {
+                    foreach (var product in ViewBag.RecommendedProducts)
+                    {
+                        <div class="product-card">
+                            <a href="/Home/ProductDetails/@product.Id">
+                                <img src="https://localhost:62599/upload/@product.Photo" alt="@product.Name" />
+                                <h4>@product.Name</h4>
+                                <span class="price">$@product.Price</span>
+                                <div class="rating">⭐⭐⭐⭐⭐</div>
+                                <a href="/Home/AddToCart/@Model.Id" class="add-to-cart-btn">🛒 إضافة إلى السلة</a>
+                            </a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>لا توجد منتجات مقترحة حاليًا.</p>
+                }
+            </div>
+        </div>
+       
+        <!-- تنسيق CSS لتحسين عرض المنتجات -->
+        <style>
+          
+        .recommended-products {
+        margin-top: 40px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* يجعل المحتوى في المنتصف أفقياً */
+        justify-content: center; /* يجعل المحتوى في المنتصف عمودياً */
+        width: 100%;
+        }
+
+        .products-container {
+        display: flex;
+        justify-content: center; /* يضع المنتجات في المنتصف أفقياً */
+        gap: 15px;
+        flex-wrap: wrap;
+        max-width: 80%; /* تحديد عرض المحتوى ليبقى في المنتصف */
+        }
+
+        .product-card {
+        width: 220px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        text-align: center;
+        background-color: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+        }
+
+        .product-card:hover {
+        transform: scale(1.05);
+        }
+
+        .product-card img {
+        width: 100%;
+        border-radius: 8px;
+        }
+
+        .price {
+        display: block;
+        font-size: 18px;
+        font-weight: bold;
+        color: #27ae60;
+        margin: 10px 0;
+        }
+
+        .rating {
+        font-size: 14px;
+        color: #f1c40f;
+        }
+
+        .add-to-cart-btn {
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background 0.3s;
+        }
+
+        .add-to-cart-btn:hover {
+        background-color: #219150;
+        }
+        </style>
+
+</body>
+</html>

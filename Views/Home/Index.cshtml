@@ -1,0 +1,294 @@
+﻿@model ECommerce.Models.IndexVm
+<section id="services" class="services section">
+    @* start search *@
+    <div class="container">
+        <form asp-action="productsearch" method="get" asp-controller="Home">
+            <div class="row mb-5">
+                <input type="submit" class="btn btn-primary col-sm-2" value="ابحث"/>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="البحث" name="xname" id="xname" style="text-align:right" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+    @* end search *@
+    <!-- Section Title -->
+    <div class="container section-title aos-init aos-animate" data-aos="fade-up">
+        <h2>أقسام الموقع</h2>
+        <p>لمتعة تسوق أكبر  من منزلك  </p> 
+    </div><!-- End Section Title -->
+
+    @* start categories *@
+    <div class="container">
+
+        <div class="row gy-4">
+
+
+            @foreach (var item in Model.Categories)
+            {
+                <div class="col-xl-4 col-lg-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-item d-flex">
+                        <div class="icon flex-shrink-0"><i class="bi bi-bag-heart"></i></div>
+                        <div>
+                            <h4 class="title"><a href="/Home/Products/@item.Id" class="stretched-link">@item.Name</a></h4>
+                            <p class="description">@item.Description</p>
+                        </div>
+                    </div>
+                </div><!-- End categories -->
+
+            }
+
+        </div>
+
+    </div>
+
+</section>
+<section id="portfolio" class="portfolio section">
+
+    <!-- Section Title -->
+    <div class="container section-title aos-init aos-animate" data-aos="fade-up">
+        <h2>Portfolio</h2>
+        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+    </div><!-- End Section Title -->
+    <!-- start Portfolio Filters -->
+    <div class="container">
+
+        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+            <ul class="portfolio-filters isotope-filters aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                <li data-filter="*" class="filter-active">All</li>
+                @foreach(var item in Model.Categories){
+                    <li data-filter="._@item.Id">@item.Name</li>
+                }
+
+            </ul><!-- End product Filters -->
+            <!-- start product Item -->
+            <div class="row gy-4 isotope-container aos-init aos-animate" data-aos="fade-up" data-aos-delay="200" style="position: relative; height: 2390.4px;">
+                @foreach (var item in Model.Products)
+                {
+                   <partial name="_ProductPartial" model="item"/>
+
+                }
+
+            </div>
+
+        </div> <!-- End product Item -->
+
+    </div>
+
+    </div>
+
+
+</section>
+@*Start Reviews *@
+<section id="testimonials" class="testimonials section light-background">
+
+    <!-- Section Title -->
+    <div class="container section-title aos-init aos-animate" data-aos="fade-up">
+        <h2>اراء العملاء</h2>
+        <p>نسعد بقراءة ارائكم حول خدماتنا المقدمة</p>
+    </div><!-- End Section Title -->
+
+    <div class="container aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="swiper init-swiper swiper-initialized swiper-horizontal swiper-backface-hidden" data-speed="600" data-delay="5000" data-breakpoints="{ &quot;320&quot;: { &quot;slidesPerView&quot;: 1, &quot;spaceBetween&quot;: 40 }, &quot;1200&quot;: { &quot;slidesPerView&quot;: 3, &quot;spaceBetween&quot;: 40 } }">
+            <script type="application/json" class="swiper-config">
+                {
+                "loop": true,
+                "speed": 600,
+                "autoplay": {
+                "delay": 5000
+                },
+                "slidesPerView": "auto",
+                "pagination": {
+                "el": ".swiper-pagination",
+                "type": "bullets",
+                "clickable": true
+                },
+                "breakpoints": {
+                "320": {
+                "slidesPerView": 1,
+                "spaceBetween": 40
+                },
+                "1200": {
+                "slidesPerView": 3,
+                "spaceBetween": 20
+                }
+                }
+                }
+            </script>
+            <div class="swiper-wrapper" id="swiper-wrapper-a4cd26f63eab73e10" aria-live="off" style="transition-duration: 0ms; transform: translate3d(-2944px, 0px, 0px); transition-delay: 0ms;">
+
+                @foreach (var item in Model.Reviews)
+                {
+                    <div class="swiper-slide swiper-slide-next" role="group" aria-label="1 / 5" style="width: 696px; margin-right: 40px;" data-swiper-slide-index="0">
+                        <div class="testimonial-item" "=" ">
+
+                        <p style="min-height:200px;">
+                        <span>@item.Subject</span>
+                        <br>
+                        <i class=" bi bi-quote quote-icon-left"></i>
+
+
+                        <span>@item.Description</span>
+                        <i class="bi bi-quote quote-icon-right"></i>
+                        </p>
+                        <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+                            <h3>@item.Name</h3>
+                            <h4>@item.Email</h4>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal">
+                <span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 1"></span>
+                <span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 2"></span>
+                <span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 3"></span>
+                <span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 4"></span>
+                <span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 5" aria-current="true"></span></div>
+
+
+</section>
+
+<!-- start latest products Item -->
+<section id="pricing" class="pricing section">
+
+    <!-- Section Title -->
+    <div class="container section-title aos-init aos-animate" data-aos="fade-up">
+        <h2>أحدث المنتجات </h2>
+        <p>متوفر لدينا أحدث المنتجات مع أفضل العروض والخصومات </p>
+    </div><!-- End Section Title -->
+
+    <div class="container">
+
+        <div class="row gy-4">
+
+
+            @foreach(var item in Model.LatestProduct){
+            <div class="col-lg-4 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="200">
+                <div class="pricing-item featured">
+                        <img src="https://localhost:62599/upload/@item.Photo" width="300" height="300">
+                    <h3>@item.Name</h3>
+                    <h4><sup>$</sup>@item.Price<span> </span></h4>
+                  <br />
+                    <a href="/Home/productDetails/@item.Id" class="buy-btn">Buy Now</a>
+                </div>
+            </div><!-- End Pricing Item -->
+            
+            }
+        </div>
+        </div>
+
+    </div>
+
+</section>
+
+<section id="contact" class="contact section">
+
+    <!-- Section Title -->
+    <div class="container section-title aos-init aos-animate" data-aos="fade-up">
+        <h2>تواصل معنا</h2>
+        <p>يسعدنا ان ترسل لنا مقترحاتك وتوصياتك </p>
+    </div><!-- End Section Title -->
+
+    <div class="container aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+            <div class="col-lg-6">
+
+                <div class="row gy-4">
+                    <div class="col-md-6">
+                        <div class="info-item aos-init aos-animate" data-aos="fade" data-aos-delay="400">
+                            <i class="bi bi-envelope"></i>
+                            <a href="mailto:alaaloh66@gmail.com" target="_blank">
+                                <h3>ارسل رسالة على البريد الالكتروني</h3>
+                            </a>
+                        </div>
+                    </div><!-- End Info Item -->
+
+                    <div class="col-md-6">
+                        <div class="info-item aos-init aos-animate" data-aos="fade" data-aos-delay="300">
+                            <a href="https://api.whatsapp.com/send?phone=+970568779013)" target="_blank">
+                            <i class="bi bi-telephone"></i>
+                            <h3>اتصل بنا</h3>
+                            </a>
+                        </div>
+                    </div><!-- End Info Item -->
+                    <div class="col-md-12">
+                        <div class="info-item aos-init aos-animate" data-aos="fade" data-aos-delay="200">
+                            <i class="bi bi-geo-alt"></i>
+                            <h3>العنوان</h3>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13619.562693225242!2d34.36123074573174!3d31.417138088178593!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14fd84c2293da045%3A0x8c3c868834340e87!2z2K_ZitixINin2YTYqNmE2K0!5e0!3m2!1sar!2s!4v1735997676375!5m2!1sar!2s" width="580px" height="300px" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+
+                        </div>
+                    </div><!-- End Info Item -->
+                   
+
+                    @* <div class="col-md-6"> *@
+                    @*     <div class="info-item aos-init aos-animate" data-aos="fade" data-aos-delay="500"> *@
+                    @*         <i class="bi bi-clock"></i> *@
+                    @*         <h3>Open Hours</h3> *@
+                    @*         <p>Monday - Friday</p> *@
+                    @*         <p>9:00AM - 05:00PM</p> *@
+                    @*     </div> *@
+                    @* </div><!-- End Info Item --> *@
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-6">
+                <form asp-action="myReview" asp-controller="Home" method="post" class="myReview aos-init aos-animate" data-aos="fade-up" data-aos-delay="200" dir="rtl">
+                    <div class="row gy-4">
+
+                        <div class="col-md-6">
+                            <input type="text" name="Name" id="Name" class="form-control" placeholder="الاسم" required="">
+                        </div>
+
+                        <div class="col-md-6 ">
+                            <input type="email" class="form-control" name="Email" id="Email" placeholder="الايميل" required="">
+                        </div>
+
+                        <div class="col-12">
+                            <input type="text" class="form-control" name="Subject" id="Subject" placeholder="عنوان الرسالة" required="">
+                        </div>
+
+                        <div class="col-12">
+                            <textarea class="form-control" name="Description" id="Description" rows="6" placeholder="محتوى الرسالة" required=""></textarea>
+                        </div>
+                        
+
+                        <div class="col-12 text-center">
+                          
+
+                            <button type="submit" class="btn btn-primary">ارسل الرسالة</button>
+                           
+                        </div>
+
+                    </div>
+                </form>
+            </div><!-- End Contact Form -->
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

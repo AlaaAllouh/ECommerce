@@ -1,0 +1,62 @@
+﻿@model List<ECommerce.Models.Product>
+
+<div class="container">
+    <form asp-action="ProductSearch" method="get" asp-controller="Home">
+        <div class="row mb-5 mt-5">
+            <input type="submit" class="btn btn-primary col-sm-2" value="ابحث" />
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="البحث" name="xname" id="xname" style="text-align:right" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<section id="team" class="team section">
+
+    <!-- Section Title -->
+    <div class="container section-title aos-init aos-animate" data-aos="fade-up">
+        @if (ViewBag.Category != null)
+        {
+            <h2>@ViewBag.Category.Name</h2>
+            <p>@ViewBag.Category.Description</p>
+        }
+        else
+        {
+            <h2>المنتجات</h2>
+            <p>استعرض منتجاتنا المتوفرة.</p>
+        }
+    </div><!-- End Section Title -->
+
+    <div class="container">
+        <div class="row gy-4">
+
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-3 col-md-6 d-flex align-items-stretch aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                        <div class="team-member">
+                            <div class="member-img">
+                                <img src="https://localhost:62599/upload/@item.Photo" class="img-fluid" alt="">
+                            </div>
+                            <div class="member-info">
+                                <a href="/Home/productDetails/@item.Id">
+                                    <h4>@item.Name</h4>
+                                </a>
+                                <p>@item.Description</p>
+                                <span> سعر المنتج : $ @item.Price </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Team Member -->
+                }
+            }
+            else
+            {
+                <p class="text-center">لم يتم العثور على منتجات مطابقة لبحثك.</p>
+            }
+
+        </div>
+    </div>
+
+</section>
