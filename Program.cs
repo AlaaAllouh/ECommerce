@@ -8,7 +8,7 @@ namespace ECommerce
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +18,8 @@ namespace ECommerce
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddIdentity<IdentityUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultUI().AddDefaultTokenProviders(); ;
             builder.Services.AddControllersWithViews();
             builder.Services.AddControllers()
     .AddJsonOptions(x =>
@@ -27,6 +27,7 @@ namespace ECommerce
 
             // For Dependency Injection 
             builder.Services.AddScoped<SouqContext>();
+
             builder.Services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireNonAlphanumeric = false;
@@ -38,7 +39,12 @@ namespace ECommerce
             );
 
             var app = builder.Build();
-
+            //To add roles when start the project first time 
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                await RoleSeeder.seedAsync(roleManager);
+            }
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -56,12 +62,15 @@ namespace ECommerce
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-            app.UseAuthorization();
-
+           
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapControllerRoute(
+             name: "default",
+             pattern: "{controller=Admin}/{action=Index}/{userid?}/{rolename?}");
             app.MapRazorPages();
 
             app.Run();

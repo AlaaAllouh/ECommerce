@@ -49,6 +49,12 @@
                             @item.OrderDetails.Sum(x=>x.Product.Price*x.Qty) دولار
                         </p>
                     </div>
+                    <div class="order-total btn btn-success">
+                        <p>
+                            <strong>حالة الطلب :</strong>
+                            @(string.IsNullOrEmpty(item.Status) ? "قيد المراجعة" : item.Status)
+                        </p>
+                    </div>
                 </div>
             </div>
         }

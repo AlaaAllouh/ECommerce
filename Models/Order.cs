@@ -19,5 +19,7 @@ public partial class Order
 
     public decimal? Total { get; set; }
 
+    public string? Status { get; set; } = "قيد المراجعة ";
+
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 }

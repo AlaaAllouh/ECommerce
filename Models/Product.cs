@@ -27,6 +27,8 @@ public partial class Product
 
     public int? Qty { get; set; }
 
+    public decimal? SupplierNum { get; set; }
+
     public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
 
     public virtual Category? Cat { get; set; }
@@ -34,4 +36,8 @@ public partial class Product
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
     public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
+
+    public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+
+    public virtual ICollection<Wishlist> Wishlists { get; set; } = new List<Wishlist>();
 }

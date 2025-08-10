@@ -1,0 +1,59 @@
+﻿@model List<Wishlist>
+
+@{
+    ViewData["Title"] = "قائمتي المفضلة";
+    string imageBaseUrl = "https://localhost:62599/upload/";
+}
+
+<h2 class="text-center my-4">قائمتي المفضلة ❤️</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="text-center text-muted">
+        <p>لا توجد منتجات في المفضلة حالياً.</p>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary">استعرض المنتجات</a>
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4" dir="rtl" lang="ar">
+        @foreach (var item in Model)
+        {
+            var product = item.Product;
+            var photoUrl = !string.IsNullOrEmpty(product.Photo)
+            ? imageBaseUrl + product.Photo
+            : Url.Content("~/images/default-product.png");
+
+            var description = string.IsNullOrEmpty(product.Description)
+            ? "لا يوجد وصف لهذا المنتج."
+            : (product.Description.Length > 60
+            ? product.Description.Substring(0, 60) + "..."
+            : product.Description);
+
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <img src="@photoUrl"
+                         class="card-img-top"
+                         style="height: 200px; object-fit: cover;"
+                         alt="@product.Name" />
+
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text text-muted">@description</p>
+                        <p class="text-success fw-bold">@product.Price</p>
+
+                        <a href="@Url.Action("ProductDetails", "Home", new { id = item.ProductId })"
+                           class="btn btn-sm btn-outline-primary">
+                            عرض التفاصيل
+                        </a>
+
+                        <a href="@Url.Action("RemoveFromFavorite", "Home", new { productId = item.ProductId })"
+                           class="btn btn-sm btn-outline-danger float-end">
+                            🗑️ إزالة
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

@@ -1,0 +1,60 @@
+﻿@model ECommerce.Models.AdminIndexVm
+
+<h2>Manage Users</h2>
+
+<form method="get" class="mb-3">
+    <input type="text" name="searchTerm" value="@Model.SearchTerm" placeholder="Search by email or username" class="form-control w-25 d-inline" />
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>User Name</th>
+            <th>PhoneNumber</th>
+            <th>Roles</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Users)
+        {
+            <tr>
+                <td>@item.User.Email</td>
+                <td>@item.User.UserName</td>
+                <td>@item.User.PhoneNumber</td>
+
+                <td>
+                    @foreach (var rolename in ViewBag.AllRoles )
+                    {
+                        if (item.userRoles.Contains(rolename))
+                        {
+                            <a asp-action="addRoleToUser" asp-route-userid="@item.User.Id" asp-route-rolename="@rolename" class="btn btn-sm btn-primary">@rolename</a>
+                        }
+                        else
+                        {
+                            <a asp-action="addRoleToUser" asp-route-userid="@item.User.Id" asp-route-rolename="@rolename" class="btn btn-sm btn-outline-primary">@rolename</a>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-pageNumber="@i"
+                   asp-route-searchTerm="@Model.SearchTerm">
+                    @i
+                </a>
+            </li>
+        }
+    </ul>
+</nav>

@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="~/assets/css/cartstyle.css">
 </head>
 <body>
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success text-center">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger text-center">@TempData["Error"]</div>
+    }
+
     <div class="cart-container" dir="rtl">
         <h1>سلتك </h1>
 
@@ -64,13 +73,27 @@
            
                 <div class="cart-summary">
                 <h3>الاجمالي : $ @ViewBag.Total</h3>
-                <input class="checkout-btn" type="submit" value="اكمال الطلب" href="/Home/addOrder"></input>
+                <hr />
+                <h3>💳 معلومات البطاقة</h3>
+
+                <div class="form-group d-flex mb-2">
+                    <input type="text" class="form-control me-2" name="CardName" placeholder="الاسم على البطاقة" required />
+                    <input type="text" class="form-control" name="CardNumber" placeholder="رقم البطاقة (16 رقم)" maxlength="16" required />
                 </div>
+
+                <div class="form-group d-flex mb-4">
+                    <input type="text" class="form-control me-2" name="Expiry" placeholder="MM/YY" maxlength="5" required />
+                    <input type="text" class="form-control" name="CVV" placeholder="CVV" maxlength="3" required />
+                </div>
+
+                <input class="checkout-btn" type="submit" value="اكمال الطلب" href="/Home/addOrder"></input>
+            </div>
           
           
         </form>
 
-       
+
+      
 
        
     </div>
